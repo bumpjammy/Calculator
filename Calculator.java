@@ -326,7 +326,6 @@ public class Frame {
 		//Converting numbers to put on display properly.
 		
 		for(;;) {
-			System.out.println(n1);
 			if(n1 != -2147483646) {
 				n1s = Integer.toString(n1);
 			}else {
