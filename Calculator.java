@@ -1,14 +1,16 @@
 package main;
 
-//Created by bumpjammy
-//https://github.com/bumpjammy
-
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
 public class Frame {
+	
+	static int convertNegative(int a) {
+		a = a*-1;
+		return a;
+	}
 	
 	//Combines 2 Integer Values
 	static int combine(int a, int b, int c) 
@@ -27,14 +29,14 @@ public class Frame {
 	static int addNumber(int a, int b, int c) {
 		int i = 0;
 		if(o==1) {
-			if (b == -1) {
+			if (b == -2147483646 ) { //Null Value = -2147483646
 				b = a;
 			}else {
 				b = combine(b, a, b);
 				i = b;
 			}
 		}else {
-			if (c == -1) {
+			if (c == -2147483646) {
 				c = a;
 			}else {
 				c = combine(c, a, c);
@@ -52,13 +54,14 @@ public class Frame {
 			n2 = 0;
 		} else {
 			o = 1;
-			n1 = 0;
-			n2 = -1;
+			n1 = -2147483646;
+			n2 = -2147483646;
 			s = ""; //Clears everything to avoid crashing.
 		}
 	}
 	
 	static int solve(int a, String b, int c) {
+		
 		int d = 0;
 		if(b == "+") {
 			d = a + c;
@@ -77,8 +80,8 @@ public class Frame {
 	
 	//Initialising Variables
 	static String equation = "";
-	static int n1 = -1;
-	static int n2 = -1;
+	static int n1 = 0;
+	static int n2 = -2147483646;
 	static String s = "";
 	static int o = 1;
 	
@@ -100,10 +103,9 @@ public class Frame {
 	private static final JButton btnNewButton_3 = new JButton("0");
 	private static final JButton btnNewButton_2_4_1 = new JButton("Clear");
 	private static final JLabel lblNewLabel = new JLabel("Label");
+	private static final JButton btnNewButton_2_7_5 = new JButton("+/-");
 
 	public static void main(String[] args) {
-		//Fix for first clicking setting to 0. (I don't know how this works).
-		n1 = addNumber(1, n1, n2);
 		
 		//More variable initialisation.
 		String n1s = "";
@@ -112,7 +114,7 @@ public class Frame {
 		//Making the JFrame
 		JFrame frame = new JFrame();
 		frame.getContentPane().setLayout(null);
-		frame.setSize(450,530);
+		frame.setSize(470,530);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Button Events.. Lots of them
@@ -265,7 +267,7 @@ public class Frame {
 				int solved = 0;
 				solved = solve(n1, s, n2);
 				n1 = solved;
-				n2 = -1;
+				n2 = -2147483646;
 				s = "";
 				o = 1;
 			}
@@ -290,7 +292,7 @@ public class Frame {
 		btnNewButton_2_4_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				n1 = 0; //Set to 0 to avoid first click setting to 0.
-				n2 = -1;
+				n2 = -2147483646;
 				s = "";
 				o = 1;
 			}
@@ -306,18 +308,31 @@ public class Frame {
 		lblNewLabel.setBounds(120, 19, 270, 100);
 		
 		frame.getContentPane().add(lblNewLabel);
+		btnNewButton_2_7_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (o == 1) {
+					n1 = convertNegative(n1);
+				} else {
+					n2 = convertNegative(n2);
+				}
+			}
+		});
+		btnNewButton_2_7_5.setBounds(400, 313, 50, 50);
+		
+		frame.getContentPane().add(btnNewButton_2_7_5);
 		
 		frame.setVisible(true);
 		
 		//Converting numbers to put on display properly.
 		
 		for(;;) {
-			if(n1 != -1) {
+			System.out.println(n1);
+			if(n1 != -2147483646) {
 				n1s = Integer.toString(n1);
 			}else {
 				n1s = "";
 			}
-			if(n2 != -1) {
+			if(n2 != -2147483646) {
 				n2s = Integer.toString(n2);
 			}else {
 				n2s = "";
